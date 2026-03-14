@@ -1,0 +1,136 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h2[id], h3[id] {
+  scroll-margin-top: 5.5rem;
+}
+
+/* Typography styles — matches Clerk docs .typography class */
+.typography > :first-child {
+  margin-top: 0 !important;
+}
+
+.typography > :last-child {
+  margin-bottom: 0 !important;
+}
+
+.typography h2 {
+  margin-top: 2rem;
+  font-size: 1.25rem;
+  line-height: 1.75rem;
+  font-weight: 600;
+  color: #0a0a0a;
+}
+
+.typography h3 {
+  margin-top: 1.5rem;
+  font-size: 1.125rem;
+  line-height: 1.75rem;
+  font-weight: 600;
+  color: #0a0a0a;
+}
+
+.typography p {
+  margin-top: 1rem;
+  font-size: 0.9375rem;
+  line-height: 1.75;
+  color: #4b5563;
+}
+
+.typography code {
+  white-space: nowrap;
+  border-radius: 0.25rem;
+  border: 1px solid rgba(10, 10, 10, 0.1);
+  background-color: rgba(10, 10, 10, 0.025);
+  padding-left: 0.25rem;
+  padding-right: 0.25rem;
+  font-size: 0.8125rem;
+  font-family: var(--font-jetbrains), monospace;
+}
+
+.typography ul {
+  margin-top: 1rem;
+  list-style-type: disc;
+  padding-left: 1.5rem;
+}
+
+.typography ul li {
+  margin-top: 0.25rem;
+  font-size: 0.9375rem;
+  line-height: 1.75;
+  color: #4b5563;
+}
+
+.typography strong {
+  font-weight: 600;
+  color: #0a0a0a;
+}
+
+.typography em {
+  font-style: italic;
+}
+
+.typography a {
+  color: #0a0a0a;
+  text-decoration: underline;
+  text-decoration-color: rgba(209, 213, 219, 1);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 0.25em;
+  transition: text-decoration-color 150ms;
+}
+
+.typography a:hover {
+  text-decoration-color: #0a0a0a;
+}
+
+/* Dark mode typography */
+:is(.dark .typography) h2,
+:is(.dark .typography) h3,
+:is(.dark .typography) strong {
+  color: #fff;
+}
+
+:is(.dark .typography) p,
+:is(.dark .typography) ul li {
+  color: #9ca3af;
+}
+
+:is(.dark .typography) code {
+  border-color: rgba(255, 255, 255, 0.1);
+  background-color: rgba(255, 255, 255, 0.05);
+  color: #e5e7eb;
+}
+
+:is(.dark .typography) a {
+  color: #e5e7eb;
+  text-decoration-color: #4b5563;
+}
+
+:is(.dark .typography) a:hover {
+  text-decoration-color: #fff;
+}
+
+/* Custom scrollbar */
+.sidebar-scroll::-webkit-scrollbar {
+  width: 4px;
+}
+
+.sidebar-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.sidebar-scroll::-webkit-scrollbar-thumb {
+  background: #d1d5db;
+  border-radius: 2px;
+}
+
+:is(.dark) .sidebar-scroll::-webkit-scrollbar-thumb {
+  background: #374151;
+}
