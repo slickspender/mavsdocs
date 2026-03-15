@@ -9,10 +9,10 @@ export default function DocContent() {
     <article className="min-w-0 flex-1 py-8">
       <div className="mx-auto max-w-[44rem] px-6 lg:px-0">
         {/* Title */}
-        <h1 className="text-pretty text-2xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-3xl">
+        <h1 className="text-pretty text-3xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-4xl">
           Sticky Disks
         </h1>
-        <p className="mt-3 text-[0.9375rem] leading-relaxed text-gray-500 dark:text-gray-400">
+        <p className="mt-3 text-base leading-relaxed text-gray-500 dark:text-gray-400">
           Speed up your CI/CD pipelines by persisting dependency caches across builds using sticky disks.
         </p>
 
