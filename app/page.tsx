@@ -6,11 +6,11 @@ import Footer from '@/components/Footer'
 
 export default function Page() {
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-950">
+    <div className="min-h-screen bg-white dark:bg-[#0f1117]">
       <Navbar />
       <Sidebar />
-      <div className="pointer-events-none relative flex w-full flex-col px-6 lg:pl-[calc(theme(width.72)+theme(padding.6))] lg:pr-7">
-        <main className="pointer-events-auto mx-auto flex w-full max-w-[43.5rem] flex-wrap items-start justify-between pt-[calc(theme(spacing.1)+theme(spacing.32))] xl:max-w-5xl" id="main">
+      <div className="pointer-events-none relative flex w-full flex-col px-6 lg:pl-[calc(theme(width.64)+theme(padding.8))] lg:pr-8">
+        <main className="pointer-events-auto mx-auto flex w-full max-w-[44rem] flex-wrap items-start justify-between pt-[calc(theme(spacing.14)+theme(spacing.8))] xl:max-w-5xl" id="main">
           <DocContent />
           <TableOfContents />
         </main>

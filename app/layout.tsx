@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import { Inter, JetBrains_Mono } from 'next/font/google'
+import ThemeProvider from '@/components/ThemeProvider'
 import './globals.css'
 
 const inter = Inter({
@@ -15,8 +16,8 @@ const jetbrainsMono = JetBrains_Mono({
 })
 
 export const metadata: Metadata = {
-  title: 'Linking to Account Portal pages | Clerk Docs',
-  description: 'Learn how to share direct links to your Account Portal pages, and how to set up fallback redirects.',
+  title: 'Caching Dependencies | MavsDocs',
+  description: 'Learn how to cache dependencies with sticky disks for faster CI builds.',
 }
 
 export default function RootLayout({
@@ -25,9 +26,14 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className={`dark ${inter.variable} ${jetbrainsMono.variable} h-full scroll-pt-16 antialiased [font-synthesis-weight:none]`}>
-      <body className="flex min-h-full flex-col bg-gray-50 font-sans text-gray-600 dark:bg-gray-950 dark:text-gray-400">
-        {children}
+    <html lang="en" className={`${inter.variable} ${jetbrainsMono.variable} h-full scroll-pt-14 antialiased [font-synthesis-weight:none]`} suppressHydrationWarning>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: `(function(){try{var t=localStorage.getItem('isDarkMode')||'light';var d=t==='system'?window.matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light':t;if(d==='dark')document.documentElement.classList.add('dark');document.documentElement.style.colorScheme=d}catch(e){}})()` }} />
+      </head>
+      <body className="flex min-h-full flex-col bg-white font-sans text-gray-700 dark:bg-[#0f1117] dark:text-gray-300">
+        <ThemeProvider>
+          {children}
+        </ThemeProvider>
       </body>
     </html>
   )

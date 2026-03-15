@@ -9,10 +9,10 @@ html {
 }
 
 h2[id], h3[id] {
-  scroll-margin-top: 5.5rem;
+  scroll-margin-top: 5rem;
 }
 
-/* Typography styles — matches Clerk docs .typography class */
+/* Typography styles — Mintlify/Blacksmith style */
 .typography > :first-child {
   margin-top: 0 !important;
 }
@@ -26,19 +26,21 @@ h2[id], h3[id] {
   font-size: 1.25rem;
   line-height: 1.75rem;
   font-weight: 600;
-  color: #0a0a0a;
+  letter-spacing: -0.01em;
+  color: #111827;
 }
 
 .typography h3 {
   margin-top: 1.5rem;
-  font-size: 1.125rem;
-  line-height: 1.75rem;
+  font-size: 1.0625rem;
+  line-height: 1.625rem;
   font-weight: 600;
-  color: #0a0a0a;
+  letter-spacing: -0.01em;
+  color: #111827;
 }
 
 .typography p {
-  margin-top: 1rem;
+  margin-top: 0.875rem;
   font-size: 0.9375rem;
   line-height: 1.75;
   color: #4b5563;
@@ -46,17 +48,17 @@ h2[id], h3[id] {
 
 .typography code {
   white-space: nowrap;
-  border-radius: 0.25rem;
-  border: 1px solid rgba(10, 10, 10, 0.1);
-  background-color: rgba(10, 10, 10, 0.025);
-  padding-left: 0.25rem;
-  padding-right: 0.25rem;
+  border-radius: 0.375rem;
+  border: 1px solid rgba(16, 185, 129, 0.15);
+  background-color: rgba(16, 185, 129, 0.06);
+  padding: 0.125rem 0.375rem;
   font-size: 0.8125rem;
   font-family: var(--font-jetbrains), monospace;
+  color: #059669;
 }
 
 .typography ul {
-  margin-top: 1rem;
+  margin-top: 0.875rem;
   list-style-type: disc;
   padding-left: 1.5rem;
 }
@@ -70,7 +72,7 @@ h2[id], h3[id] {
 
 .typography strong {
   font-weight: 600;
-  color: #0a0a0a;
+  color: #111827;
 }
 
 .typography em {
@@ -78,23 +80,22 @@ h2[id], h3[id] {
 }
 
 .typography a {
-  color: #0a0a0a;
-  text-decoration: underline;
-  text-decoration-color: rgba(209, 213, 219, 1);
-  text-decoration-thickness: 2px;
-  text-underline-offset: 0.25em;
-  transition: text-decoration-color 150ms;
+  color: #059669;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 150ms;
 }
 
 .typography a:hover {
-  text-decoration-color: #0a0a0a;
+  color: #047857;
+  text-decoration: underline;
 }
 
 /* Dark mode typography */
 :is(.dark .typography) h2,
 :is(.dark .typography) h3,
 :is(.dark .typography) strong {
-  color: #fff;
+  color: #f9fafb;
 }
 
 :is(.dark .typography) p,
@@ -103,18 +104,17 @@ h2[id], h3[id] {
 }
 
 :is(.dark .typography) code {
-  border-color: rgba(255, 255, 255, 0.1);
-  background-color: rgba(255, 255, 255, 0.05);
-  color: #e5e7eb;
+  border-color: rgba(16, 185, 129, 0.2);
+  background-color: rgba(16, 185, 129, 0.08);
+  color: #34d399;
 }
 
 :is(.dark .typography) a {
-  color: #e5e7eb;
-  text-decoration-color: #4b5563;
+  color: #34d399;
 }
 
 :is(.dark .typography) a:hover {
-  text-decoration-color: #fff;
+  color: #6ee7b7;
 }
 
 /* Custom scrollbar */
@@ -133,4 +133,46 @@ h2[id], h3[id] {
 
 :is(.dark) .sidebar-scroll::-webkit-scrollbar-thumb {
   background: #374151;
+}
+
+/* Callout component styles */
+.callout {
+  margin-top: 1rem;
+  border-radius: 0.5rem;
+  padding: 0.875rem 1rem;
+  font-size: 0.875rem;
+  line-height: 1.5rem;
+}
+
+.callout-info {
+  border-left: 3px solid #10b981;
+  background-color: rgba(16, 185, 129, 0.05);
+  color: #065f46;
+}
+
+.callout-warning {
+  border-left: 3px solid #f59e0b;
+  background-color: rgba(245, 158, 11, 0.05);
+  color: #92400e;
+}
+
+.callout-note {
+  border-left: 3px solid #6366f1;
+  background-color: rgba(99, 102, 241, 0.05);
+  color: #3730a3;
+}
+
+:is(.dark) .callout-info {
+  background-color: rgba(16, 185, 129, 0.08);
+  color: #a7f3d0;
+}
+
+:is(.dark) .callout-warning {
+  background-color: rgba(245, 158, 11, 0.08);
+  color: #fde68a;
+}
+
+:is(.dark) .callout-note {
+  background-color: rgba(99, 102, 241, 0.08);
+  color: #c7d2fe;
 }

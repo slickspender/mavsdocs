@@ -1,3 +1,7 @@
+'use client'
+
+import { useTheme } from './ThemeProvider'
+
 const footerSections = [
   {
     title: 'Product',
@@ -51,6 +55,8 @@ const footerSections = [
 ]
 
 export default function Footer() {
+  const { theme, setTheme } = useTheme()
+
   return (
     <footer className="pointer-events-auto mt-auto pb-24 xl:ml-[max(0px,calc((100%-64rem)/2))]">
       <div className="mx-auto max-w-[43.5rem] border-t border-gray-600/10 pt-16 dark:border-gray-900 xl:mx-0 xl:max-w-5xl">
@@ -96,7 +102,11 @@ export default function Footer() {
           </p>
           <div className="flex gap-x-1.5 rounded-full bg-gray-600/5 p-1 ring-1 ring-gray-600/5 ring-inset dark:bg-black/30 dark:ring-white/5" aria-label="Theme" role="toolbar">
             {/* Dark */}
-            <button className="relative size-5 flex-none rounded-full outline-none transition-colors text-gray-400 hover:text-gray-800 dark:text-gray-500 dark:hover:text-gray-300" aria-label="Dark">
+            <button
+              onClick={() => setTheme('dark')}
+              className={`relative size-5 flex-none rounded-full outline-none transition-colors ${theme === 'dark' ? 'text-gray-950 dark:text-white' : 'text-gray-400 hover:text-gray-800 dark:text-gray-500 dark:hover:text-gray-300'}`}
+              aria-label="Dark"
+            >
               <span className="absolute inset-[calc(-3/16*1rem)]" />
               <svg viewBox="0 0 20 20" fill="none" aria-hidden="true" className="size-5">
                 <path fill="currentColor" fillOpacity=".15" fillRule="evenodd" clipRule="evenodd" d="M15.25 10.68a4.614 4.614 0 0 1-5.929-5.93 5.274 5.274 0 1 0 5.929 5.93Z" />
@@ -104,7 +114,11 @@ export default function Footer() {
               </svg>
             </button>
             {/* Light */}
-            <button className="relative size-5 flex-none rounded-full outline-none transition-colors text-gray-400 hover:text-gray-800 dark:text-gray-500 dark:hover:text-gray-300" aria-label="Light">
+            <button
+              onClick={() => setTheme('light')}
+              className={`relative size-5 flex-none rounded-full outline-none transition-colors ${theme === 'light' ? 'text-gray-950 dark:text-white' : 'text-gray-400 hover:text-gray-800 dark:text-gray-500 dark:hover:text-gray-300'}`}
+              aria-label="Light"
+            >
               <span className="absolute inset-[calc(-3/16*1rem)]" />
               <svg viewBox="0 0 20 20" fill="none" aria-hidden="true" className="size-5">
                 <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M10 3v1.5M10 15.5V17M17 10h-1.5M4.5 10H3M14.95 14.95l-1.06-1.06M6.11 6.11L5.05 5.05M14.95 5.05l-1.06 1.06M6.11 13.89l-1.06 1.06" />
@@ -112,7 +126,11 @@ export default function Footer() {
               </svg>
             </button>
             {/* System */}
-            <button className="relative size-5 flex-none rounded-full outline-none transition-colors text-gray-400 hover:text-gray-800 dark:text-gray-500 dark:hover:text-gray-300" aria-label="System">
+            <button
+              onClick={() => setTheme('system')}
+              className={`relative size-5 flex-none rounded-full outline-none transition-colors ${theme === 'system' ? 'text-gray-950 dark:text-white' : 'text-gray-400 hover:text-gray-800 dark:text-gray-500 dark:hover:text-gray-300'}`}
+              aria-label="System"
+            >
               <span className="absolute inset-[calc(-3/16*1rem)]" />
               <svg viewBox="0 0 20 20" fill="none" aria-hidden="true" className="size-5">
                 <rect x="3" y="4" width="14" height="10" rx="2" stroke="currentColor" strokeWidth="1.5" />
