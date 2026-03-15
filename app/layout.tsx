@@ -28,7 +28,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={`${ibmPlex.variable} ${jetbrainsMono.variable} h-full scroll-pt-14 antialiased [font-synthesis-weight:none]`} suppressHydrationWarning>
-      <body className="flex min-h-screen flex-col bg-sage-background font-sans text-gray-700">
+      <body className="flex min-h-screen flex-col bg-sage-background dark:bg-dark font-sans text-gray-700 dark:text-gray-300">
         <ThemeProvider>
           {children}
         </ThemeProvider>

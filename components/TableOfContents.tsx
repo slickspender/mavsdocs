@@ -45,10 +45,10 @@ export default function TableOfContents() {
     <div className="sticky top-[calc(theme(spacing.24)+theme(spacing.8))] order-last hidden w-56 flex-none overflow-y-auto py-8 xl:block">
       {/* Header with list icon */}
       <div className="mb-3 flex items-center gap-1.5 px-0.5">
-        <svg className="size-3.5 text-gray-400" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
+        <svg className="size-3.5 text-gray-400 dark:text-gray-500" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
           <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
         </svg>
-        <span className="text-[13px] font-semibold text-gray-900">On this page</span>
+        <span className="text-[13px] font-semibold text-gray-900 dark:text-white">On this page</span>
       </div>
 
       <ul className="space-y-1.5">
@@ -61,7 +61,7 @@ export default function TableOfContents() {
               } ${
                 activeId === item.id
                   ? 'font-semibold text-olive-500'
-                  : 'text-gray-500 hover:text-gray-700'
+                  : 'text-gray-500 hover:text-gray-700 dark:text-gray-500 dark:hover:text-gray-300'
               }`}
             >
               {item.title}

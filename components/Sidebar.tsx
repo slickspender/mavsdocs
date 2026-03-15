@@ -166,7 +166,7 @@ export default function Sidebar() {
 
   return (
     <nav
-      className="sidebar-scroll fixed bottom-0 left-0 top-24 z-[100] hidden w-64 overflow-y-auto border-r border-sage-border bg-sage-background lg:block"
+      className="sidebar-scroll fixed bottom-0 left-0 top-24 z-[100] hidden w-64 overflow-y-auto border-r border-sage-border dark:border-white/10 bg-sage-background dark:bg-dark-100 lg:block"
     >
       <div className="px-4 pb-8 pt-4">
         {/* Top flat links */}
@@ -175,9 +175,9 @@ export default function Sidebar() {
             <a
               key={link.title}
               href={link.href}
-              className="flex items-center gap-2.5 rounded-md px-2.5 py-1.5 text-[13px] font-medium text-gray-600 transition-colors hover:bg-black/5 hover:text-gray-900"
+              className="flex items-center gap-2.5 rounded-md px-2.5 py-1.5 text-[13px] font-medium text-gray-600 dark:text-gray-400 transition-colors hover:bg-black/5 dark:hover:bg-white/5 hover:text-gray-900 dark:hover:text-gray-200"
             >
-              <NavIcon icon={link.icon} className="size-4 flex-none text-gray-400" />
+              <NavIcon icon={link.icon} className="size-4 flex-none text-gray-400 dark:text-gray-500" />
               {link.title}
             </a>
           ))}
@@ -186,7 +186,7 @@ export default function Sidebar() {
         {/* Sections */}
         {sections.map((section) => (
           <div key={section.title} className="mb-6">
-            <h3 className="mb-1.5 px-2.5 text-xs font-bold text-gray-900 tracking-wide">
+            <h3 className="mb-1.5 px-2.5 text-xs font-bold text-gray-900 dark:text-gray-100 tracking-wide">
               {section.title}
             </h3>
             <div className="space-y-0.5">
@@ -200,13 +200,13 @@ export default function Sidebar() {
                       <button
                         onClick={() => toggleExpand(item.title)}
                         className={`flex w-full items-center gap-2.5 rounded-md px-2.5 py-1.5 text-[13px] transition-colors ${
-                          isActive ? 'bg-sage-active font-semibold text-gray-900' : 'font-medium text-gray-600 hover:bg-black/5 hover:text-gray-900'
+                          isActive ? 'bg-sage-active dark:bg-white/10 font-semibold text-gray-900 dark:text-white' : 'font-medium text-gray-600 dark:text-gray-400 hover:bg-black/5 dark:hover:bg-white/5 hover:text-gray-900 dark:hover:text-gray-200'
                         }`}
                       >
-                        <NavIcon icon={item.icon} className={`size-4 flex-none ${isActive ? 'text-olive-500' : 'text-gray-400'}`} />
+                        <NavIcon icon={item.icon} className={`size-4 flex-none ${isActive ? 'text-olive-500' : 'text-gray-400 dark:text-gray-500'}`} />
                         <span className="flex-1 text-left">{item.title}</span>
                         <svg
-                          className={`size-3 flex-none text-gray-400 transition-transform ${expandedItems[item.title] ? 'rotate-90' : ''}`}
+                          className={`size-3 flex-none text-gray-400 dark:text-gray-500 transition-transform ${expandedItems[item.title] ? 'rotate-90' : ''}`}
                           fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor"
                         >
                           <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
@@ -220,11 +220,11 @@ export default function Sidebar() {
                               href={child.href}
                               className={`flex items-center gap-2.5 rounded-md px-2.5 py-1.5 text-[13px] transition-colors ${
                                 child.active
-                                  ? 'bg-sage-active font-semibold text-gray-900'
-                                  : 'font-medium text-gray-600 hover:bg-black/5 hover:text-gray-900'
+                                  ? 'bg-sage-active dark:bg-white/10 font-semibold text-gray-900 dark:text-white'
+                                  : 'font-medium text-gray-600 dark:text-gray-400 hover:bg-black/5 dark:hover:bg-white/5 hover:text-gray-900 dark:hover:text-gray-200'
                               }`}
                             >
-                              <NavIcon icon={child.icon} className={`size-4 flex-none ${child.active ? 'text-olive-500' : 'text-gray-400'}`} />
+                              <NavIcon icon={child.icon} className={`size-4 flex-none ${child.active ? 'text-olive-500' : 'text-gray-400 dark:text-gray-500'}`} />
                               {child.title}
                             </a>
                           ))}
@@ -235,10 +235,10 @@ export default function Sidebar() {
                     <a
                       href={item.href}
                       className={`flex items-center gap-2.5 rounded-md px-2.5 py-1.5 text-[13px] transition-colors ${
-                        isActive ? 'bg-sage-active font-semibold text-gray-900' : 'font-medium text-gray-600 hover:bg-black/5 hover:text-gray-900'
+                        isActive ? 'bg-sage-active dark:bg-white/10 font-semibold text-gray-900 dark:text-white' : 'font-medium text-gray-600 dark:text-gray-400 hover:bg-black/5 dark:hover:bg-white/5 hover:text-gray-900 dark:hover:text-gray-200'
                       }`}
                     >
-                      <NavIcon icon={item.icon} className={`size-4 flex-none ${isActive ? 'text-olive-500' : 'text-gray-400'}`} />
+                      <NavIcon icon={item.icon} className={`size-4 flex-none ${isActive ? 'text-olive-500' : 'text-gray-400 dark:text-gray-500'}`} />
                       {item.title}
                     </a>
                   )}
