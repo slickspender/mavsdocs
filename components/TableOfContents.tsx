@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
+import OpenInLLM from './OpenInLLM'
 
 const tocItems = [
   { id: 'overview', title: 'Overview', level: 2 },
@@ -71,6 +72,8 @@ export default function TableOfContents() {
           </li>
         ))}
       </ul>
+
+      <OpenInLLM />
     </div>
   )
 }

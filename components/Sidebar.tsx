@@ -154,7 +154,7 @@ export default function Sidebar() {
 
   return (
     <nav
-      className="sidebar-scroll fixed bottom-0 left-0 top-24 z-[100] hidden w-64 overflow-y-auto border-r border-gray-200/70 bg-white dark:border-gray-800/60 dark:bg-[#0f1117] lg:block"
+      className="sidebar-scroll fixed bottom-0 left-0 top-24 z-[100] hidden w-64 overflow-y-auto border-r border-gray-200/40 bg-white dark:border-gray-800/60 dark:bg-[#0f1117] lg:block"
     >
       <div className="px-3 pb-8 pt-4">
         {/* Top flat links */}
