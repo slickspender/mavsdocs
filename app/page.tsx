@@ -10,7 +10,7 @@ export default function Page() {
       <Navbar />
       <Sidebar />
       <div className="pointer-events-none relative flex w-full flex-col px-6 lg:pl-[calc(theme(width.64)+theme(padding.8))] lg:pr-8">
-        <main className="pointer-events-auto mx-auto flex w-full max-w-[44rem] flex-wrap items-start justify-between pt-[calc(theme(spacing.14)+theme(spacing.8))] xl:max-w-5xl" id="main">
+        <main className="pointer-events-auto mx-auto flex w-full max-w-[44rem] flex-wrap items-start justify-between pt-[calc(theme(spacing.24)+theme(spacing.8))] xl:max-w-5xl" id="main">
           <DocContent />
           <TableOfContents />
         </main>

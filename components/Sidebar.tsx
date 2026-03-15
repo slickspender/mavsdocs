@@ -2,85 +2,139 @@
 
 import { useState } from 'react'
 
-const navSections = [
+// Top-level flat nav items (no section grouping)
+const topLinks = [
+  { title: 'Status', icon: 'bar-chart', href: '#' },
+  { title: 'Support', icon: 'folder', href: '#' },
+  { title: 'Security', icon: 'lock', href: '#' },
+  { title: 'Pricing', icon: 's-badge', href: '#' },
+  { title: 'Console', icon: 'monitor', href: '#' },
+]
+
+// Grouped sections
+const sections = [
   {
     title: 'Getting Started',
-    icon: 'rocket',
     children: [
-      { title: 'Quickstart', href: '#', active: false },
-      { title: 'Installation', href: '#', active: false },
-      { title: 'Configuration', href: '#', active: false },
+      { title: 'Welcome', icon: 'document', href: '#' },
+      { title: 'Quickstart', icon: 'play', href: '#' },
     ],
   },
   {
-    title: 'Blacksmith Caching',
-    icon: 'bolt',
+    title: 'Performance',
     children: [
-      { title: 'Overview', href: '#', active: false },
-      { title: 'Docker Layer Caching', href: '#', active: false },
-      { title: 'Caching Dependencies', href: '#', active: true },
-      { title: 'Language Caches', href: '#', active: false },
-    ],
-  },
-  {
-    title: 'Runners',
-    icon: 'server',
-    children: [
-      { title: 'GitHub Actions', href: '#', active: false },
-      { title: 'Custom Runners', href: '#', active: false },
-      { title: 'Runner Images', href: '#', active: false },
-    ],
-  },
-  {
-    title: 'Observability',
-    icon: 'chart',
-    children: [
-      { title: 'Build Insights', href: '#', active: false },
-      { title: 'Metrics', href: '#', active: false },
-    ],
-  },
-  {
-    title: 'Integrations',
-    icon: 'puzzle',
-    children: [
-      { title: 'GitHub App', href: '#', active: false },
-      { title: 'Slack', href: '#', active: false },
-      { title: 'Webhooks', href: '#', active: false },
+      {
+        title: '2x Faster Runners',
+        icon: 'refresh',
+        href: '#',
+        expandable: true,
+        expanded: false,
+        children: [],
+      },
+      {
+        title: '4x Faster Cache',
+        icon: 'download',
+        href: '#',
+        expandable: true,
+        expanded: true,
+        children: [
+          { title: 'Actions', icon: 'gear', href: '#' },
+          { title: 'Sticky Disks', icon: 'disk', href: '#', active: true },
+        ],
+      },
+      { title: '40x Faster Docker Builds', icon: 'lightning', href: '#' },
+      { title: 'Container Caching (Beta)', icon: 'container', href: '#' },
+      { title: 'Docker Pulls', icon: 'docker', href: '#' },
     ],
   },
 ]
 
-function SectionIcon({ icon, className }: { icon: string; className?: string }) {
+function NavIcon({ icon, className }: { icon: string; className?: string }) {
   const cls = className || 'size-4'
   switch (icon) {
-    case 'rocket':
-      return (
-        <svg className={cls} fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
-          <path strokeLinecap="round" strokeLinejoin="round" d="M15.59 14.37a6 6 0 0 1-5.84 7.38v-4.8m5.84-2.58a14.98 14.98 0 0 0 6.16-12.12A14.98 14.98 0 0 0 9.631 8.41m5.96 5.96a14.926 14.926 0 0 1-5.841 2.58m-.119-8.54a6 6 0 0 0-7.381 5.84h4.8m2.581-5.84a14.927 14.927 0 0 0-2.58 5.84m2.699 2.7c-.103.021-.207.041-.311.06a15.09 15.09 0 0 1-2.448-2.448 14.9 14.9 0 0 1 .06-.312m-2.24 2.39a4.493 4.493 0 0 0-1.757 4.306 4.493 4.493 0 0 0 4.306-1.758M16.5 9a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Z" />
-        </svg>
-      )
-    case 'bolt':
-      return (
-        <svg className={cls} fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
-          <path strokeLinecap="round" strokeLinejoin="round" d="m3.75 13.5 10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75Z" />
-        </svg>
-      )
-    case 'server':
-      return (
-        <svg className={cls} fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
-          <path strokeLinecap="round" strokeLinejoin="round" d="M21.75 17.25v-.228a4.5 4.5 0 0 0-.12-1.03l-2.268-9.64a3.375 3.375 0 0 0-3.285-2.602H7.923a3.375 3.375 0 0 0-3.285 2.602l-2.268 9.64a4.5 4.5 0 0 0-.12 1.03v.228m19.5 0a3 3 0 0 1-3 3H5.25a3 3 0 0 1-3-3m19.5 0a3 3 0 0 0-3-3H5.25a3 3 0 0 0-3 3m16.5 0h.008v.008h-.008v-.008Zm-3 0h.008v.008h-.008v-.008Z" />
-        </svg>
-      )
-    case 'chart':
+    case 'bar-chart':
       return (
         <svg className={cls} fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
           <path strokeLinecap="round" strokeLinejoin="round" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 0 1 3 19.875v-6.75ZM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 0 1-1.125-1.125V8.625ZM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 0 1-1.125-1.125V4.125Z" />
         </svg>
       )
-    case 'puzzle':
+    case 'folder':
       return (
         <svg className={cls} fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
-          <path strokeLinecap="round" strokeLinejoin="round" d="M14.25 6.087c0-.355.186-.676.401-.959.221-.29.349-.634.349-1.003 0-1.036-1.007-1.875-2.25-1.875s-2.25.84-2.25 1.875c0 .369.128.713.349 1.003.215.283.401.604.401.959v0a.64.64 0 0 1-.657.643 48.39 48.39 0 0 1-4.163-.3c.186 1.613.293 3.25.315 4.907a.656.656 0 0 1-.658.663v0c-.355 0-.676-.186-.959-.401a1.647 1.647 0 0 0-1.003-.349c-1.036 0-1.875 1.007-1.875 2.25s.84 2.25 1.875 2.25c.369 0 .713-.128 1.003-.349.283-.215.604-.401.959-.401v0c.31 0 .555.26.532.57a48.039 48.039 0 0 1-.642 5.056c1.518.19 3.058.309 4.616.354a.64.64 0 0 0 .657-.643v0c0-.355-.186-.676-.401-.959a1.647 1.647 0 0 1-.349-1.003c0-1.035 1.008-1.875 2.25-1.875 1.243 0 2.25.84 2.25 1.875 0 .369-.128.713-.349 1.003-.215.283-.4.604-.4.959v0c0 .333.277.599.61.58a48.1 48.1 0 0 0 5.427-.63 48.05 48.05 0 0 0 .582-4.717.532.532 0 0 0-.533-.57v0c-.355 0-.676.186-.959.401-.29.221-.634.349-1.003.349-1.035 0-1.875-1.007-1.875-2.25s.84-2.25 1.875-2.25c.37 0 .713.128 1.003.349.283.215.604.401.96.401v0a.656.656 0 0 0 .658-.663 48.422 48.422 0 0 0-.37-5.36c-1.886.342-3.81.574-5.766.689a.578.578 0 0 1-.61-.58v0Z" />
+          <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 12.75V12A2.25 2.25 0 0 1 4.5 9.75h15A2.25 2.25 0 0 1 21.75 12v.75m-8.69-6.44-2.12-2.12a1.5 1.5 0 0 0-1.061-.44H4.5A2.25 2.25 0 0 0 2.25 6v12a2.25 2.25 0 0 0 2.25 2.25h15A2.25 2.25 0 0 0 21.75 18V9a2.25 2.25 0 0 0-2.25-2.25h-5.379a1.5 1.5 0 0 1-1.06-.44Z" />
+        </svg>
+      )
+    case 'lock':
+      return (
+        <svg className={cls} fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 1 0-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 0 0 2.25-2.25v-6.75a2.25 2.25 0 0 0-2.25-2.25H6.75a2.25 2.25 0 0 0-2.25 2.25v6.75a2.25 2.25 0 0 0 2.25 2.25Z" />
+        </svg>
+      )
+    case 's-badge':
+      return (
+        <svg className={cls} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5}>
+          <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v12m-3-2.818.879.659c1.171.879 3.07.879 4.242 0 1.172-.879 1.172-2.303 0-3.182C13.536 12.219 12.768 12 12 12c-.725 0-1.45-.22-2.003-.659-1.106-.879-1.106-2.303 0-3.182s2.9-.879 4.006 0l.415.33" />
+        </svg>
+      )
+    case 'monitor':
+      return (
+        <svg className={cls} fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" d="M9 17.25v1.007a3 3 0 0 1-.879 2.122L7.5 21h9l-.621-.621A3 3 0 0 1 15 18.257V17.25m6-12V15a2.25 2.25 0 0 1-2.25 2.25H5.25A2.25 2.25 0 0 1 3 15V5.25A2.25 2.25 0 0 1 5.25 3h13.5A2.25 2.25 0 0 1 21 5.25Z" />
+        </svg>
+      )
+    case 'document':
+      return (
+        <svg className={cls} fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m2.25 0H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z" />
+        </svg>
+      )
+    case 'play':
+      return (
+        <svg className={cls} fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" d="M5.25 5.653c0-.856.917-1.398 1.667-.986l11.54 6.347a1.125 1.125 0 0 1 0 1.972l-11.54 6.347a1.125 1.125 0 0 1-1.667-.986V5.653Z" />
+        </svg>
+      )
+    case 'refresh':
+      return (
+        <svg className={cls} fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0 3.181 3.183a8.25 8.25 0 0 0 13.803-3.7M4.031 9.865a8.25 8.25 0 0 1 13.803-3.7l3.181 3.182M2.985 19.644l3.181-3.182" />
+        </svg>
+      )
+    case 'download':
+      return (
+        <svg className={cls} fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3" />
+        </svg>
+      )
+    case 'gear':
+      return (
+        <svg className={cls} fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" d="M9.594 3.94c.09-.542.56-.94 1.11-.94h2.593c.55 0 1.02.398 1.11.94l.213 1.281c.063.374.313.686.645.87.074.04.147.083.22.127.325.196.72.257 1.075.124l1.217-.456a1.125 1.125 0 0 1 1.37.49l1.296 2.247a1.125 1.125 0 0 1-.26 1.431l-1.003.827c-.293.241-.438.613-.43.992a7.723 7.723 0 0 1 0 .255c-.008.378.137.75.43.991l1.004.827c.424.35.534.955.26 1.43l-1.298 2.247a1.125 1.125 0 0 1-1.369.491l-1.217-.456c-.355-.133-.75-.072-1.076.124a6.47 6.47 0 0 1-.22.128c-.331.183-.581.495-.644.869l-.213 1.281c-.09.543-.56.94-1.11.94h-2.594c-.55 0-1.019-.398-1.11-.94l-.213-1.281c-.062-.374-.312-.686-.644-.87a6.52 6.52 0 0 1-.22-.127c-.325-.196-.72-.257-1.076-.124l-1.217.456a1.125 1.125 0 0 1-1.369-.49l-1.297-2.247a1.125 1.125 0 0 1 .26-1.431l1.004-.827c.292-.24.437-.613.43-.991a6.932 6.932 0 0 1 0-.255c.007-.38-.138-.751-.43-.992l-1.004-.827a1.125 1.125 0 0 1-.26-1.43l1.297-2.247a1.125 1.125 0 0 1 1.37-.491l1.216.456c.356.133.751.072 1.076-.124.072-.044.146-.086.22-.128.332-.183.582-.495.644-.869l.214-1.28Z" />
+          <path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+        </svg>
+      )
+    case 'disk':
+      return (
+        <svg className={cls} fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" d="M20.25 6.375c0 2.278-3.694 4.125-8.25 4.125S3.75 8.653 3.75 6.375m16.5 0c0-2.278-3.694-4.125-8.25-4.125S3.75 4.097 3.75 6.375m16.5 0v11.25c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125V6.375m16.5 0v3.75m-16.5-3.75v3.75m16.5 0v3.75C20.25 16.153 16.556 18 12 18s-8.25-1.847-8.25-4.125v-3.75m16.5 0c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125" />
+        </svg>
+      )
+    case 'lightning':
+      return (
+        <svg className={cls} fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" d="m3.75 13.5 10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75Z" />
+        </svg>
+      )
+    case 'container':
+      return (
+        <svg className={cls} fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" d="m21 7.5-9-5.25L3 7.5m18 0-9 5.25m9-5.25v9l-9 5.25M3 7.5l9 5.25M3 7.5v9l9 5.25m0-9v9" />
+        </svg>
+      )
+    case 'docker':
+      return (
+        <svg className={cls} fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" d="M12 9.75v6.75m0 0-3-3m3 3 3-3m-8.25 6a4.5 4.5 0 0 1-1.41-8.775 5.25 5.25 0 0 1 10.233-2.33 3 3 0 0 1 3.758 3.848A3.752 3.752 0 0 1 18 19.5H6.75Z" />
         </svg>
       )
     default:
@@ -89,59 +143,89 @@ function SectionIcon({ icon, className }: { icon: string; className?: string }) 
 }
 
 export default function Sidebar() {
-  const [expanded, setExpanded] = useState<Record<number, boolean>>(() => {
-    const initial: Record<number, boolean> = {}
-    navSections.forEach((s, i) => {
-      initial[i] = s.children.some(c => c.active) || i < 2
-    })
-    return initial
+  const [expandedItems, setExpandedItems] = useState<Record<string, boolean>>({
+    '2x Faster Runners': false,
+    '4x Faster Cache': true,
   })
 
-  const toggleSection = (index: number) => {
-    setExpanded((prev) => ({ ...prev, [index]: !prev[index] }))
+  const toggleExpand = (title: string) => {
+    setExpandedItems(prev => ({ ...prev, [title]: !prev[title] }))
   }
 
   return (
     <nav
-      className="sidebar-scroll fixed bottom-0 left-0 top-14 z-[100] hidden w-64 overflow-y-auto border-r border-gray-200/70 bg-white dark:border-gray-800/60 dark:bg-[#0f1117] lg:block"
+      className="sidebar-scroll fixed bottom-0 left-0 top-24 z-[100] hidden w-64 overflow-y-auto border-r border-gray-200/70 bg-white dark:border-gray-800/60 dark:bg-[#0f1117] lg:block"
     >
-      <div className="px-4 pb-8 pt-6">
-        {navSections.map((section, index) => (
-          <div key={section.title} className={index > 0 ? 'mt-5' : ''}>
-            {/* Section header */}
-            <button
-              onClick={() => toggleSection(index)}
-              className="flex w-full items-center gap-2 text-xs font-semibold uppercase tracking-wider text-gray-400 transition-colors hover:text-gray-600 dark:text-gray-500 dark:hover:text-gray-300"
+      <div className="px-3 pb-8 pt-4">
+        {/* Top flat links */}
+        <div className="space-y-0.5">
+          {topLinks.map((link) => (
+            <a
+              key={link.title}
+              href={link.href}
+              className="flex items-center gap-2.5 rounded-md px-2.5 py-1.5 text-[0.8125rem] text-gray-600 transition-colors hover:bg-gray-50 hover:text-gray-900 dark:text-gray-400 dark:hover:bg-gray-800/50 dark:hover:text-white"
             >
-              <SectionIcon icon={section.icon} className="size-3.5" />
-              <span className="flex-1 text-left">{section.title}</span>
-              <svg
-                className={`size-3 flex-none text-gray-300 transition-transform dark:text-gray-600 ${expanded[index] ? 'rotate-90' : ''}`}
-                fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor"
-              >
-                <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
-              </svg>
-            </button>
+              <NavIcon icon={link.icon} className="size-4 flex-none text-gray-400 dark:text-gray-500" />
+              {link.title}
+            </a>
+          ))}
+        </div>
 
-            {/* Children */}
-            {expanded[index] && (
-              <ul className="mt-2 space-y-0.5 border-l border-gray-200 pl-3 dark:border-gray-800">
-                {section.children.map((child) => (
-                  <li key={child.title}>
+        {/* Sections */}
+        {sections.map((section) => (
+          <div key={section.title} className="mt-6">
+            <h3 className="mb-1 px-2.5 text-sm font-semibold text-gray-900 dark:text-white">
+              {section.title}
+            </h3>
+            <div className="space-y-0.5">
+              {section.children.map((item: any) => (
+                <div key={item.title}>
+                  {item.expandable ? (
+                    <>
+                      <button
+                        onClick={() => toggleExpand(item.title)}
+                        className="flex w-full items-center gap-2.5 rounded-md px-2.5 py-1.5 text-[0.8125rem] text-gray-600 transition-colors hover:bg-gray-50 hover:text-gray-900 dark:text-gray-400 dark:hover:bg-gray-800/50 dark:hover:text-white"
+                      >
+                        <NavIcon icon={item.icon} className="size-4 flex-none text-gray-400 dark:text-gray-500" />
+                        <span className="flex-1 text-left">{item.title}</span>
+                        <svg
+                          className={`size-3 flex-none text-gray-300 transition-transform dark:text-gray-600 ${expandedItems[item.title] ? 'rotate-90' : ''}`}
+                          fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor"
+                        >
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+                        </svg>
+                      </button>
+                      {expandedItems[item.title] && item.children && (
+                        <div className="space-y-0.5 pl-4">
+                          {item.children.map((child: any) => (
+                            <a
+                              key={child.title}
+                              href={child.href}
+                              className={`flex items-center gap-2.5 py-1.5 text-[0.8125rem] transition-colors ${
+                                child.active
+                                  ? '-ml-7 rounded-r-md border-l-[3px] border-emerald-500 bg-gray-100 pl-[calc(1.75rem+0.625rem-3px)] pr-2.5 font-medium text-gray-900 dark:bg-gray-800/60 dark:text-white'
+                                  : 'rounded-md px-2.5 text-gray-600 hover:bg-gray-50 hover:text-gray-900 dark:text-gray-400 dark:hover:bg-gray-800/50 dark:hover:text-white'
+                              }`}
+                            >
+                              <NavIcon icon={child.icon} className="size-4 flex-none text-gray-400 dark:text-gray-500" />
+                              {child.title}
+                            </a>
+                          ))}
+                        </div>
+                      )}
+                    </>
+                  ) : (
                     <a
-                      href={child.href}
-                      className={`block rounded-md px-2.5 py-1.5 text-[0.8125rem] transition-colors ${
-                        child.active
-                          ? '-ml-[calc(0.75rem+1px)] border-l-2 border-emerald-500 pl-[calc(0.75rem+0.625rem-1px)] font-medium text-gray-900 dark:text-white'
-                          : 'text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white'
-                      }`}
+                      href={item.href}
+                      className="flex items-center gap-2.5 rounded-md px-2.5 py-1.5 text-[0.8125rem] text-gray-600 transition-colors hover:bg-gray-50 hover:text-gray-900 dark:text-gray-400 dark:hover:bg-gray-800/50 dark:hover:text-white"
                     >
-                      {child.title}
+                      <NavIcon icon={item.icon} className="size-4 flex-none text-gray-400 dark:text-gray-500" />
+                      {item.title}
                     </a>
-                  </li>
-                ))}
-              </ul>
-            )}
+                  )}
+                </div>
+              ))}
+            </div>
           </div>
         ))}
       </div>
