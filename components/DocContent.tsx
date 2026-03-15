@@ -1,283 +1,114 @@
 'use client'
 
 import { useState } from 'react'
-import InlineCode from './InlineCode'
-import CodeBlock from './CodeBlock'
 
 export default function DocContent() {
   return (
-    <article className="min-w-0 flex-1 py-8">
-      <div className="mx-auto max-w-[44rem] px-6 lg:px-0">
-        {/* Title */}
-        <h1 className="text-pretty text-3xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-4xl">
-          Sticky Disks
-        </h1>
-        <p className="mt-3 text-base leading-relaxed text-gray-500 dark:text-gray-400">
-          Speed up your CI/CD pipelines by persisting dependency caches across builds using sticky disks.
+    <article className="min-w-0 flex-1 py-8 relative">
+      <div className="mx-auto max-w-[50rem] px-6 lg:px-0">
+        
+        {/* Breadcrumb - Over-title */}
+        <div className="mb-3">
+          <span className="text-sm font-bold text-olive-500">2x Faster Runners</span>
+        </div>
+
+        {/* Title row */}
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-5">
+          <h1 className="text-4xl font-extrabold tracking-tight text-gray-900 sm:text-5xl">
+            Instance Types
+          </h1>
+          <button className="flex items-center gap-1.5 rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm font-medium text-gray-700 shadow-sm transition-colors hover:bg-gray-50">
+            <svg className="size-4 text-gray-500" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 17.25v3.375c0 .621-.504 1.125-1.125 1.125h-9.75a1.125 1.125 0 0 1-1.125-1.125V7.875c0-.621.504-1.125 1.125-1.125H6.75a9.06 9.06 0 0 1 1.5.124m7.5 10.376h3.375c.621 0 1.125-.504 1.125-1.125V11.25c0-4.46-3.243-8.161-7.5-8.876a9.06 9.06 0 0 0-1.5-.124H9.375c-.621 0-1.125.504-1.125 1.125v3.5m7.5 10.375H9.375a1.125 1.125 0 0 1-1.125-1.125v-9.25m12 6.625v-1.875a3.375 3.375 0 0 0-3.375-3.375h-1.5a1.125 1.125 0 0 1-1.125-1.125v-1.5A3.375 3.375 0 0 0 12 6.75m0 0v-1.5m0 0A3.375 3.375 0 0 0 8.625 1.875M12 3.375V6.75" />
+            </svg>
+            Copy page
+            <svg className="size-3.5 text-gray-400" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
+            </svg>
+          </button>
+        </div>
+
+        <p className="text-lg sm:text-xl leading-relaxed text-gray-600 mb-10">
+          Blacksmith runners are 2x faster and costs 75% less than GitHub-hosted runners
         </p>
 
-        {/* Content */}
-        <div className="typography mt-8">
-          {/* Overview */}
-          <h2 id="overview">
-            <a href="#overview">Overview</a>
-          </h2>
-          <p>
-            Sticky Disks allow you to persist directories across workflow runs, significantly reducing
-            build times by caching dependencies, build artifacts, and other reusable data. Unlike
-            traditional caching solutions, Sticky Disks provide <strong>near-instant restoration</strong> with
-            no upload or download overhead.
-          </p>
-
-          {/* Basics */}
-          <h2 id="basics">
-            <a href="#basics">Basics</a>
-          </h2>
-          <p>
-            To use a Sticky Disk, add the <InlineCode>useblacksmith/stickydisk</InlineCode> action to your
-            workflow file. The action takes a <InlineCode>key</InlineCode> parameter that uniquely identifies
-            the disk, and a <InlineCode>path</InlineCode> parameter specifying which directory to persist.
-          </p>
-
-          <CodeBlock>{`name: CI
-on: [push, pull_request]
-
-jobs:
-  build:
-    runs-on: blacksmith
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Cache node_modules
-        uses: useblacksmith/stickydisk@v1
-        with:
-          key: node-modules-\${{ hashFiles('package-lock.json') }}
-          path: node_modules
-
-      - name: Install dependencies
-        run: npm ci
-
-      - name: Run tests
-        run: npm test`}</CodeBlock>
-
-          {/* Cache Performance Comparison */}
-          <h2 id="cache-performance">
-            <a href="#cache-performance">Cache Performance Comparison</a>
-          </h2>
-          <p>
-            Sticky Disks provide significantly faster cache restoration compared to traditional approaches:
-          </p>
-
-          {/* Comparison table */}
-          <div className="mt-4 overflow-hidden rounded-lg border border-gray-200 dark:border-gray-800">
-            <table className="w-full text-left text-sm">
-              <thead>
-                <tr className="border-b border-gray-200 bg-gray-50 dark:border-gray-800 dark:bg-gray-900/50">
-                  <th className="px-4 py-3 font-semibold text-gray-900 dark:text-white">Method</th>
-                  <th className="px-4 py-3 font-semibold text-gray-900 dark:text-white">Restore Time</th>
-                  <th className="px-4 py-3 font-semibold text-gray-900 dark:text-white">Save Time</th>
-                </tr>
-              </thead>
-              <tbody className="text-gray-600 dark:text-gray-400">
-                <tr className="border-b border-gray-100 dark:border-gray-800/60">
-                  <td className="px-4 py-3 font-medium text-gray-900 dark:text-white">Sticky Disks</td>
-                  <td className="px-4 py-3">&lt; 1s</td>
-                  <td className="px-4 py-3">0s</td>
-                </tr>
-                <tr className="border-b border-gray-100 dark:border-gray-800/60">
-                  <td className="px-4 py-3 font-medium text-gray-900 dark:text-white">actions/cache</td>
-                  <td className="px-4 py-3">30-60s</td>
-                  <td className="px-4 py-3">30-60s</td>
-                </tr>
-                <tr>
-                  <td className="px-4 py-3 font-medium text-gray-900 dark:text-white">No Cache</td>
-                  <td className="px-4 py-3">N/A</td>
-                  <td className="px-4 py-3">N/A</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-
-          {/* Use Cases */}
-          <h2 id="use-cases">
-            <a href="#use-cases">Use Cases</a>
-          </h2>
-
-          <h3 id="npm-caching">
-            <a href="#npm-caching">NPM Package Caching</a>
-          </h3>
-          <p>
-            Cache your <InlineCode>node_modules</InlineCode> directory to avoid re-downloading packages
-            on every build. Use the <InlineCode>package-lock.json</InlineCode> hash as the cache key to
-            automatically invalidate when dependencies change.
-          </p>
-
-          <h3 id="bazel-caching">
-            <a href="#bazel-caching">Bazel Build Caching</a>
-          </h3>
-          <p>
-            For Bazel builds, use the dedicated{' '}
-            <a href="https://github.com/useblacksmith/setup-bazel">useblacksmith/setup-bazel</a>{' '}
-            action which automatically configures Sticky Disks for the Bazel output base and repository cache.
-          </p>
-
-          <CodeBlock>{`jobs:
-  build:
-    runs-on: blacksmith
-    steps:
-      - uses: actions/checkout@v4
-      - uses: useblacksmith/setup-bazel@v1
-      - run: bazel build //...`}</CodeBlock>
-
-          {/* How it works */}
-          <h2 id="how-it-works">
-            <a href="#how-it-works">How it works</a>
-          </h2>
-          <p>
-            When a workflow uses a Sticky Disk, the specified directory is mounted from a persistent
-            volume that survives across workflow runs. On the first run, the directory is empty and your
-            workflow populates it normally. On subsequent runs, the data is already present — no download needed.
-          </p>
-
-          {/* Using inside container */}
-          <h2 id="using-inside-container">
-            <a href="#using-inside-container">Using Sticky Disks inside a container</a>
-          </h2>
-          <p>
-            Sticky Disks can be used inside containers by mounting the persistent volume into the container
-            filesystem. Add the <InlineCode>container</InlineCode> key to your job configuration.
-          </p>
-
-          {/* stickydisk-delete */}
-          <h2 id="stickydisk-delete">
-            <a href="#stickydisk-delete">useblacksmith/stickydisk-delete</a>
-          </h2>
-          <p>
-            Use the <InlineCode>useblacksmith/stickydisk-delete</InlineCode> action to programmatically
-            delete sticky disks when they are no longer needed.
-          </p>
-
-          <h3 id="delete-by-key">
-            <a href="#delete-by-key">Delete by Key</a>
-          </h3>
-          <p>
-            Delete a specific sticky disk by providing its cache key.
-          </p>
-
-          <h3 id="delete-docker-cache">
-            <a href="#delete-docker-cache">Delete Docker Cache</a>
-          </h3>
-          <p>
-            Delete Docker layer caches associated with a build.
-          </p>
-
-          {/* Cleanup example */}
-          <h2 id="cleanup-example">
-            <a href="#cleanup-example">Example: Cleanup After Build</a>
-          </h2>
-
-          <CodeBlock>{`cleanup:
-    needs: build
-    if: always()
-    steps:
-      - name: Delete sticky disk
-        uses: useblacksmith/stickydisk-delete@v1
-        with:
-          delete-key: deps-cache`}</CodeBlock>
-
-          {/* Availability */}
-          <h2 id="availability">
-            <a href="#availability">Availability</a>
-          </h2>
-          <p>
-            Sticky disks are available in the following regions:
-          </p>
-
-          <div className="mt-4 overflow-hidden rounded-lg border border-gray-200 dark:border-gray-800">
-            <table className="w-full text-left text-sm">
-              <thead>
-                <tr className="border-b border-gray-200 bg-gray-50 dark:border-gray-800 dark:bg-gray-900/50">
-                  <th className="px-4 py-3 font-semibold text-gray-900 dark:text-white">Region</th>
-                  <th className="px-4 py-3 font-semibold text-gray-900 dark:text-white">Sticky Disks</th>
-                </tr>
-              </thead>
-              <tbody className="text-gray-600 dark:text-gray-400">
-                <tr className="border-b border-gray-100 dark:border-gray-800/60">
-                  <td className="px-4 py-3">us-west</td>
-                  <td className="px-4 py-3">&#x2705; Available</td>
-                </tr>
-                <tr className="border-b border-gray-100 dark:border-gray-800/60">
-                  <td className="px-4 py-3">eu-central</td>
-                  <td className="px-4 py-3">&#x2705; Available</td>
-                </tr>
-                <tr>
-                  <td className="px-4 py-3">eu-west</td>
-                  <td className="px-4 py-3">&#x1F51C; Coming soon</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-
-          {/* Blue info callout */}
-          <div className="callout callout-info mt-4">
-            <div className="flex items-start gap-2.5">
-              <svg className="mt-0.5 size-4 flex-none" fill="currentColor" viewBox="0 0 20 20">
-                <path fillRule="evenodd" d="M18 10a8 8 0 1 1-16 0 8 8 0 0 1 16 0Zm-7-4a1 1 0 1 1-2 0 1 1 0 0 1 2 0ZM9 9a.75.75 0 0 0 0 1.5h.253a.25.25 0 0 1 .244.304l-.459 2.066A1.75 1.75 0 0 0 10.747 15H11a.75.75 0 0 0 0-1.5h-.253a.25.25 0 0 1-.244-.304l.459-2.066A1.75 1.75 0 0 0 9.253 9H9Z" clipRule="evenodd" />
-              </svg>
-              <span>
-                Sticky disk support in <InlineCode>eu-west</InlineCode> is coming soon.
-                If your organization is in <InlineCode>eu-west</InlineCode> and you&apos;d like to use
-                sticky disks now, <a href="#" className="font-medium underline">contact support</a> to
-                request moving to a region that supports them.
-              </span>
+        {/* Diff Example Block */}
+        <div className="overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm mb-16">
+          {/* Header */}
+          <div className="flex items-center justify-between border-b border-gray-100 bg-[#f9f9f9] px-5 py-3">
+            <div className="flex items-center gap-3 text-sm font-semibold text-gray-600">
+              <span className="font-mono text-xs tracking-tighter text-gray-400">&lt;/&gt;</span>
+              Diff Example
+            </div>
+            <div className="flex items-center gap-4 text-gray-400">
+              <button aria-label="Copy code" className="hover:text-gray-600 transition-colors">
+                <svg className="size-4" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 17.25v3.375c0 .621-.504 1.125-1.125 1.125h-9.75a1.125 1.125 0 0 1-1.125-1.125V7.875c0-.621.504-1.125 1.125-1.125H6.75a9.06 9.06 0 0 1 1.5.124m7.5 10.376h3.375c.621 0 1.125-.504 1.125-1.125V11.25c0-4.46-3.243-8.161-7.5-8.876a9.06 9.06 0 0 0-1.5-.124H9.375c-.621 0-1.125.504-1.125 1.125v3.5m7.5 10.375H9.375a1.125 1.125 0 0 1-1.125-1.125v-9.25m12 6.625v-1.875a3.375 3.375 0 0 0-3.375-3.375h-1.5a1.125 1.125 0 0 1-1.125-1.125v-1.5A3.375 3.375 0 0 0 12 6.75m0 0v-1.5m0 0A3.375 3.375 0 0 0 8.625 1.875M12 3.375V6.75" />
+                </svg>
+              </button>
+              <button aria-label="Wand edit" className="hover:text-gray-600 transition-colors">
+                <svg className="size-4" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M9.813 15.904 9 18.75l-.813-2.846a4.5 4.5 0 0 0-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 0 0 3.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 0 0 3.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 0 0-3.09 3.09ZM18.259 8.715 18 9.75l-.259-1.035a3.375 3.375 0 0 0-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 0 0 2.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 0 0 2.455 2.456L21.75 6l-1.036.259a3.375 3.375 0 0 0-2.455 2.456ZM16.894 20.567 16.5 21.75l-.394-1.183a2.25 2.25 0 0 0-1.423-1.423L13.5 18.75l1.183-.394a2.25 2.25 0 0 0 1.423-1.423l.394-1.183.394 1.183a2.25 2.25 0 0 0 1.423 1.423l1.183.394-1.183.394a2.25 2.25 0 0 0-1.423 1.423Z" />
+                </svg>
+              </button>
             </div>
           </div>
-
-          {/* Pricing */}
-          <h2 id="pricing">
-            <a href="#pricing">Pricing</a>
-          </h2>
-          <p>
-            Sticky Disks are included in your Blacksmith plan. Storage is billed based on peak usage
-            per billing cycle.
-          </p>
-
-          {/* FAQ */}
-          <h2 id="faq">
-            <a href="#faq">FAQ</a>
-          </h2>
+          
+          {/* Code */}
+          <div className="font-mono text-[15px] sm:text-[16px] leading-loose py-3">
+            <div className="flex px-5 py-1 text-[#5c6b89]">
+              <span className="w-8 select-none text-right opacity-50 mr-4">1</span>
+              <span><span className="text-[#3b82f6]">jobs</span>:</span>
+            </div>
+            <div className="flex px-5 py-1 text-[#5c6b89]">
+              <span className="w-8 select-none text-right opacity-50 mr-4">2</span>
+              <span>  <span className="text-[#3b82f6]">build</span>:</span>
+            </div>
+            <div className="flex px-5 py-1 bg-[#fee2e2]/40 text-[#b91c1c]">
+              <span className="w-8 select-none text-center opacity-70 mr-4">-</span>
+              <span>    <span className="text-[#3b82f6]">runs-on</span>: <span className="text-[#7c3aed]">ubuntu-latest</span></span>
+            </div>
+            <div className="flex px-5 py-1 bg-[#dcfce7]/40 text-[#15803d]">
+              <span className="w-8 select-none text-center opacity-70 mr-4">+</span>
+              <span className="font-medium">    <span className="text-[#3b82f6]">runs-on</span>: <span className="text-[#15803d]">blacksmith-2vcpu-ubuntu-2404</span></span>
+            </div>
+          </div>
         </div>
 
-        {/* FAQ Accordion */}
-        <div className="mt-4 space-y-2">
-          <AccordionItem
-            question="How much storage does each Sticky Disk get?"
-            answer="Each Sticky Disk gets up to 50 GB of storage by default. Contact support if you need more."
-          />
-          <AccordionItem
-            question="Can I use Sticky Disks with self-hosted runners?"
-            answer="Sticky Disks are currently only available on Blacksmith-managed runners. Self-hosted runner support is on the roadmap."
-          />
-          <AccordionItem
-            question="What happens when my cache key changes?"
-            answer="When the cache key changes, a new Sticky Disk is created. The old disk will be garbage collected after the retention period expires (default: 7 days)."
-          />
+        {/* Content */}
+        <div className="typography">
+          <h2 id="overview" className="text-2xl font-bold text-gray-900 mb-6 mt-12 scroll-mt-24">
+            Overview
+          </h2>
+          <ul className="mb-6 ml-0 mt-4 space-y-5 list-disc pl-6">
+            <li className="text-[16px] sm:text-[17px] leading-relaxed text-gray-600">
+              <strong className="text-gray-900 font-semibold">We're substantially faster:</strong> We orchestrate jobs over our fleet of modern gaming CPUs
+              which have significantly higher single-thread performance compared to their server
+              counterparts. Blacksmith is twice as fast as GitHub's decade-old server hardware for most
+              CI jobs. Learn more about our runners <a href="#" className="font-semibold underline decoration-2 underline-offset-2">here</a>.
+            </li>
+            <li className="text-[16px] sm:text-[17px] leading-relaxed text-gray-600">
+              <strong className="text-gray-900 font-semibold">We're able to provision runners instantly:</strong> Blacksmith runs jobs in ephemeral Firecracker
+              microVMs that boot in milliseconds...
+            </li>
+          </ul>
         </div>
+      </div>
 
-        {/* Ask a question input */}
-        <div className="mt-8">
-          <div className="flex items-center rounded-lg border border-gray-200 bg-white px-4 py-2.5 dark:border-gray-700 dark:bg-gray-800/50">
-            <input
-              type="text"
-              placeholder="Ask a question..."
-              className="flex-1 bg-transparent text-sm text-gray-500 outline-none placeholder:text-gray-400 dark:text-gray-400 dark:placeholder:text-gray-500"
-              readOnly
-            />
-            <kbd className="ml-2 rounded border border-gray-200 bg-gray-50 px-1.5 py-0.5 font-mono text-[0.625rem] font-medium text-gray-400 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-500">
+      {/* Floating Ask bar at bottom */}
+      <div className="fixed bottom-6 left-1/2 -translate-x-1/2 w-full max-w-[40rem] z-50 px-6 sm:px-0">
+        <div className="relative flex items-center bg-white shadow-lg rounded-xl border border-gray-200 p-2 pr-3">
+          <input 
+            type="text" 
+            placeholder="Ask a question..."
+            className="flex-1 bg-transparent px-3 py-2 text-[15px] text-gray-900 placeholder:text-gray-400 outline-none focus:ring-0 rounded-l-lg border-none"
+          />
+          <div className="flex items-center gap-2">
+            <kbd className="hidden sm:flex items-center justify-center font-sans text-xs font-semibold text-gray-400 bg-gray-50 border border-gray-200 rounded px-1.5 py-0.5 h-[22px]">
               ⌘I
             </kbd>
-            <button className="ml-2 flex size-7 items-center justify-center rounded-full bg-emerald-500 text-white transition-colors hover:bg-emerald-600">
-              <svg className="size-3.5" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor">
+            <button className="flex h-7 w-7 items-center justify-center rounded-lg bg-gray-200/80 text-white transition-colors hover:bg-gray-300">
+              <svg className="size-4 text-white" fill="none" viewBox="0 0 24 24" strokeWidth={3} stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 10.5 12 3m0 0 7.5 7.5M12 3v18" />
               </svg>
             </button>
@@ -288,27 +119,3 @@ jobs:
   )
 }
 
-function AccordionItem({ question, answer }: { question: string; answer: string }) {
-  const [open, setOpen] = useState(false)
-  return (
-    <div className="rounded-lg border border-gray-200 dark:border-gray-800">
-      <button
-        onClick={() => setOpen(!open)}
-        className="flex w-full items-center justify-between px-4 py-3 text-left text-sm font-medium text-gray-900 transition-colors hover:bg-gray-50 dark:text-white dark:hover:bg-gray-800/50"
-      >
-        {question}
-        <svg
-          className={`size-4 flex-none text-gray-400 transition-transform dark:text-gray-500 ${open ? 'rotate-180' : ''}`}
-          fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor"
-        >
-          <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
-        </svg>
-      </button>
-      {open && (
-        <div className="border-t border-gray-200 px-4 py-3 text-sm text-gray-600 dark:border-gray-800 dark:text-gray-400">
-          {answer}
-        </div>
-      )}
-    </div>
-  )
-}

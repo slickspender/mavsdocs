@@ -3,13 +3,7 @@
 import { useState } from 'react'
 
 // Top-level flat nav items (no section grouping)
-const topLinks = [
-  { title: 'Status', icon: 'bar-chart', href: '#' },
-  { title: 'Support', icon: 'folder', href: '#' },
-  { title: 'Security', icon: 'lock', href: '#' },
-  { title: 'Pricing', icon: 's-badge', href: '#' },
-  { title: 'Console', icon: 'monitor', href: '#' },
-]
+const topLinks: any[] = []
 
 // Grouped sections
 const sections = [
@@ -23,28 +17,46 @@ const sections = [
   {
     title: 'Performance',
     children: [
-      {
-        title: '2x Faster Runners',
-        icon: 'refresh',
-        href: '#',
-        expandable: true,
-        expanded: false,
-        children: [],
-      },
-      {
-        title: '4x Faster Cache',
-        icon: 'download',
-        href: '#',
-        expandable: true,
-        expanded: true,
-        children: [
-          { title: 'Actions', icon: 'gear', href: '#' },
-          { title: 'Sticky Disks', icon: 'disk', href: '#', active: true },
-        ],
-      },
+      { title: 'Instance Types', icon: 'server', href: '#' },
+      { title: 'Static IP', icon: 'globe', href: '#' },
       { title: '40x Faster Docker Builds', icon: 'lightning', href: '#' },
       { title: 'Container Caching (Beta)', icon: 'container', href: '#' },
       { title: 'Docker Pulls', icon: 'docker', href: '#' },
+      { title: 'Git Checkout Caching (Beta)', icon: 'git', href: '#' },
+    ],
+  },
+  {
+    title: 'Testboxes',
+    children: [
+      { title: 'Testboxes (Beta)', icon: 'box', href: '#' },
+      { title: 'CLI Reference', icon: 'terminal', href: '#' },
+    ],
+  },
+  {
+    title: 'Observability',
+    children: [
+      { title: 'Run History', icon: 'clock', href: '#' },
+      { title: 'Logs', icon: 'document-text', href: '#' },
+      { title: 'SSH Access', icon: 'terminal', href: '#' },
+      { title: 'Monitors', icon: 'monitor', href: '#' },
+      { title: 'Metrics', icon: 'chart-bar', href: '#' },
+      { title: 'Test Analytics', icon: 'beaker', href: '#' },
+      { title: 'CI Analytics', icon: 'chart-line', href: '#' },
+    ],
+  },
+  {
+    title: 'Administration',
+    children: [
+      { title: 'Permissions', icon: 'shield-check', href: '#' },
+      { title: 'Network & IP Allowlisting', icon: 'globe', href: '#' },
+    ],
+  },
+  {
+    title: 'FAQ',
+    children: [
+      { title: 'Settings', icon: 'gear', href: '#' },
+      { title: 'Terms of Service', icon: 'document-text', href: '#' },
+      { title: 'Privacy Policy', icon: 'lock-closed', href: '#' },
     ],
   },
 ]
@@ -154,18 +166,18 @@ export default function Sidebar() {
 
   return (
     <nav
-      className="sidebar-scroll fixed bottom-0 left-0 top-24 z-[100] hidden w-64 overflow-y-auto border-r border-gray-200/40 bg-white dark:border-gray-800/60 dark:bg-[#0f1117] lg:block"
+      className="sidebar-scroll fixed bottom-0 left-0 top-24 z-[100] hidden w-64 overflow-y-auto border-r border-sage-border bg-sage-background lg:block"
     >
-      <div className="px-3 pb-8 pt-4">
+      <div className="px-4 pb-8 pt-4">
         {/* Top flat links */}
-        <div className="space-y-0.5">
+        <div className="space-y-0.5 mb-6">
           {topLinks.map((link) => (
             <a
               key={link.title}
               href={link.href}
-              className="flex items-center gap-2.5 rounded-md px-2.5 py-1.5 text-[0.8125rem] text-gray-600 transition-colors hover:bg-gray-50 hover:text-gray-900 dark:text-gray-400 dark:hover:bg-gray-800/50 dark:hover:text-white"
+              className="flex items-center gap-2.5 rounded-md px-2.5 py-1.5 text-[13px] font-medium text-gray-600 transition-colors hover:bg-black/5 hover:text-gray-900"
             >
-              <NavIcon icon={link.icon} className="size-4 flex-none text-gray-400 dark:text-gray-500" />
+              <NavIcon icon={link.icon} className="size-4 flex-none text-gray-400" />
               {link.title}
             </a>
           ))}
@@ -173,41 +185,46 @@ export default function Sidebar() {
 
         {/* Sections */}
         {sections.map((section) => (
-          <div key={section.title} className="mt-6">
-            <h3 className="mb-1 px-2.5 text-sm font-semibold text-gray-900 dark:text-white">
+          <div key={section.title} className="mb-6">
+            <h3 className="mb-1.5 px-2.5 text-xs font-bold text-gray-900 tracking-wide">
               {section.title}
             </h3>
             <div className="space-y-0.5">
-              {section.children.map((item: any) => (
+              {section.children.map((item: any) => {
+                const isActive = item.title === 'Instance Types';
+                
+                return (
                 <div key={item.title}>
                   {item.expandable ? (
                     <>
                       <button
                         onClick={() => toggleExpand(item.title)}
-                        className="flex w-full items-center gap-2.5 rounded-md px-2.5 py-1.5 text-[0.8125rem] text-gray-600 transition-colors hover:bg-gray-50 hover:text-gray-900 dark:text-gray-400 dark:hover:bg-gray-800/50 dark:hover:text-white"
+                        className={`flex w-full items-center gap-2.5 rounded-md px-2.5 py-1.5 text-[13px] transition-colors ${
+                          isActive ? 'bg-sage-active font-semibold text-gray-900' : 'font-medium text-gray-600 hover:bg-black/5 hover:text-gray-900'
+                        }`}
                       >
-                        <NavIcon icon={item.icon} className="size-4 flex-none text-gray-400 dark:text-gray-500" />
+                        <NavIcon icon={item.icon} className={`size-4 flex-none ${isActive ? 'text-olive-500' : 'text-gray-400'}`} />
                         <span className="flex-1 text-left">{item.title}</span>
                         <svg
-                          className={`size-3 flex-none text-gray-300 transition-transform dark:text-gray-600 ${expandedItems[item.title] ? 'rotate-90' : ''}`}
+                          className={`size-3 flex-none text-gray-400 transition-transform ${expandedItems[item.title] ? 'rotate-90' : ''}`}
                           fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor"
                         >
                           <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
                         </svg>
                       </button>
                       {expandedItems[item.title] && item.children && (
-                        <div className="space-y-0.5 pl-4">
+                        <div className="space-y-0.5 pl-4 mt-0.5">
                           {item.children.map((child: any) => (
                             <a
                               key={child.title}
                               href={child.href}
-                              className={`flex items-center gap-2.5 py-1.5 text-[0.8125rem] transition-colors ${
+                              className={`flex items-center gap-2.5 rounded-md px-2.5 py-1.5 text-[13px] transition-colors ${
                                 child.active
-                                  ? '-ml-7 rounded-r-md border-l-[3px] border-emerald-500 bg-gray-100 pl-[calc(1.75rem+0.625rem-3px)] pr-2.5 font-medium text-gray-900 dark:bg-gray-800/60 dark:text-white'
-                                  : 'rounded-md px-2.5 text-gray-600 hover:bg-gray-50 hover:text-gray-900 dark:text-gray-400 dark:hover:bg-gray-800/50 dark:hover:text-white'
+                                  ? 'bg-sage-active font-semibold text-gray-900'
+                                  : 'font-medium text-gray-600 hover:bg-black/5 hover:text-gray-900'
                               }`}
                             >
-                              <NavIcon icon={child.icon} className="size-4 flex-none text-gray-400 dark:text-gray-500" />
+                              <NavIcon icon={child.icon} className={`size-4 flex-none ${child.active ? 'text-olive-500' : 'text-gray-400'}`} />
                               {child.title}
                             </a>
                           ))}
@@ -217,14 +234,16 @@ export default function Sidebar() {
                   ) : (
                     <a
                       href={item.href}
-                      className="flex items-center gap-2.5 rounded-md px-2.5 py-1.5 text-[0.8125rem] text-gray-600 transition-colors hover:bg-gray-50 hover:text-gray-900 dark:text-gray-400 dark:hover:bg-gray-800/50 dark:hover:text-white"
+                      className={`flex items-center gap-2.5 rounded-md px-2.5 py-1.5 text-[13px] transition-colors ${
+                        isActive ? 'bg-sage-active font-semibold text-gray-900' : 'font-medium text-gray-600 hover:bg-black/5 hover:text-gray-900'
+                      }`}
                     >
-                      <NavIcon icon={item.icon} className="size-4 flex-none text-gray-400 dark:text-gray-500" />
+                      <NavIcon icon={item.icon} className={`size-4 flex-none ${isActive ? 'text-olive-500' : 'text-gray-400'}`} />
                       {item.title}
                     </a>
                   )}
                 </div>
-              ))}
+              )})}
             </div>
           </div>
         ))}

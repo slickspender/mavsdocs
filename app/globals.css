@@ -143,6 +143,21 @@ h2[id], h3[id] {
 }
 
 /* Custom scrollbar */
+/* Custom scrollbar - visible on hover */
+.sidebar-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: transparent transparent;
+  transition: scrollbar-color 0.3s ease;
+}
+
+.sidebar-scroll:hover {
+  scrollbar-color: #d1d5db transparent;
+}
+
+:is(.dark) .sidebar-scroll:hover {
+  scrollbar-color: #374151 transparent;
+}
+
 .sidebar-scroll::-webkit-scrollbar {
   width: 4px;
 }
@@ -152,11 +167,16 @@ h2[id], h3[id] {
 }
 
 .sidebar-scroll::-webkit-scrollbar-thumb {
-  background: #d1d5db;
+  background: transparent;
   border-radius: 2px;
+  transition: background-color 0.3s ease;
 }
 
-:is(.dark) .sidebar-scroll::-webkit-scrollbar-thumb {
+.sidebar-scroll:hover::-webkit-scrollbar-thumb {
+  background: #d1d5db;
+}
+
+:is(.dark) .sidebar-scroll:hover::-webkit-scrollbar-thumb {
   background: #374151;
 }
 

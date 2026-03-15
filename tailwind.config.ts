@@ -9,7 +9,7 @@ const config: Config = {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['var(--font-inter)', 'system-ui', 'sans-serif'],
+        sans: ['var(--font-ibm-plex)', 'system-ui', 'sans-serif'],
         mono: ['var(--font-jetbrains)', 'monospace'],
       },
       colors: {
@@ -25,6 +25,15 @@ const config: Config = {
           800: '#065f46',
           900: '#064e3b',
           950: '#022c22',
+        },
+        olive: {
+          500: '#5c6622',
+        },
+        sage: {
+          background: '#faf9f5',
+          sidebar: '#f6f5f0',
+          active: '#e5e4dc',
+          border: '#e8e7e1',
         },
         dark: {
           DEFAULT: '#0f1117',
